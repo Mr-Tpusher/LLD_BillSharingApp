@@ -1,5 +1,6 @@
 package entity;
 import exception.IncorrectExistingPassword;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,8 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @Getter
 @Setter
@@ -16,7 +19,11 @@ public class User {
     private String userName;
     private String phoneNumber;
     private String password;
+
+    @Setter(AccessLevel.NONE)
     private Set<Group> groups;
+
+    @Setter(AccessLevel.NONE)
     private Set<Expense> expenses;
 
 
@@ -25,6 +32,8 @@ public class User {
         this.userName = name;
         this.phoneNumber = phoneNumber;
         this.password = hashPassword(password);
+        this.groups = ConcurrentHashMap.newKeySet();
+        this.expenses = ConcurrentHashMap.newKeySet();
     }
 
 
@@ -47,6 +56,14 @@ public class User {
             // return false;
             throw new IncorrectExistingPassword("Incorrect existing password.");
         }
+    }
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    public void addExpense(Expense expense) {
+        this.expenses.add(expense);
     }
 
 }
