@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"password", "groups", "expenses"})
 public class User {
     private UUID id;
     private String userName;

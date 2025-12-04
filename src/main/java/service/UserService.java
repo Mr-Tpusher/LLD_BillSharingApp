@@ -1,6 +1,7 @@
 package service;
 
 import entity.User;
+import exception.IncorrectExistingPassword;
 import repository.IUserRepo;
 import repository.UserRepoInMemory;
 
@@ -35,7 +36,7 @@ public class UserService {
     }
 
 
-    public boolean updatePassword(UUID userId, String oldPassword, String newPassword) {
+    public boolean updatePassword(UUID userId, String oldPassword, String newPassword) throws IncorrectExistingPassword {
         User user = userRepo.get(userId);
         return user.updatePassword(oldPassword, newPassword);
     }

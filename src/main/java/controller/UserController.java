@@ -1,5 +1,6 @@
 package controller;
 import entity.User;
+import exception.IncorrectExistingPassword;
 import service.UserService;
 
 import java.util.UUID;
@@ -29,7 +30,7 @@ public class UserController {
         return userService.registerUser(name, phone, password);
     }
 
-    public boolean updatePassword(UUID userId, String oldPassword, String newPassword) {
+    public boolean updatePassword(UUID userId, String oldPassword, String newPassword) throws IncorrectExistingPassword {
         return userService.updatePassword(userId, oldPassword, newPassword);
     }
 
