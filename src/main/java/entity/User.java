@@ -1,4 +1,5 @@
 package entity;
+import exception.IncorrectExistingPassword;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -37,13 +38,14 @@ public class User {
     }
 
 
-    public boolean updatePassword(String oldPassword, String newPassword) {
+    public boolean updatePassword(String oldPassword, String newPassword) throws IncorrectExistingPassword {
         String oldHashedPassword = this.getPassword();
         if (verifyPassword(oldPassword, oldHashedPassword)) {
             this.password = hashPassword(newPassword);
             return true;
         } else {
-            return false;
+            // return false;
+            throw new IncorrectExistingPassword("Incorrect existing password.");
         }
     }
 
