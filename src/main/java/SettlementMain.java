@@ -15,7 +15,7 @@ import service.GroupService;
 
 import java.util.List;
 
-public class SplitMain {
+public class SettlementMain {
     public static void main(String[] args) throws IllegalAccessException {
 
         UserController userController = UserController.getInstance();
