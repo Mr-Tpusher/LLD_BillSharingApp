@@ -9,7 +9,6 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 @Getter
 @Setter

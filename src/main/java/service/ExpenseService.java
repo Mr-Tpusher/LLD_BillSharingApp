@@ -25,8 +25,9 @@ public class ExpenseService {
     public  Expense createExpense(CreateExpenseRequest createExpenseRequest) {
 
         // populate the participants list if expense is for the group
+        Group group = null;
         if (createExpenseRequest.getGroupId() != null) {
-            Group group = groupRepo.get(createExpenseRequest.getGroupId());
+            group = groupRepo.get(createExpenseRequest.getGroupId());
             group.getParticipants().forEach(createExpenseRequest::addParticipant);
         }
 
@@ -45,10 +46,17 @@ public class ExpenseService {
                 splitAmounts
                 );
 
-
         expenseRepo.create(expense);
-        return expense;
 
+        // add expense in each user's set
+        expense.getParticipants().forEach(user -> user.addExpense(expense));
+
+        // if it is a group expense,add it in the group
+        if (group != null) {
+            group.addExpense(expense);
+        }
+
+        return expense;
     }
 
 

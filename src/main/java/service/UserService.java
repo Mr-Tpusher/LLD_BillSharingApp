@@ -1,10 +1,12 @@
 package service;
 
+import entity.Expense;
 import entity.User;
 import exception.IncorrectExistingPassword;
 import repository.IUserRepo;
 import repository.UserRepoInMemory;
 
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -39,5 +41,10 @@ public class UserService {
     public boolean updatePassword(UUID userId, String oldPassword, String newPassword) throws IncorrectExistingPassword {
         User user = userRepo.get(userId);
         return user.updatePassword(oldPassword, newPassword);
+    }
+
+    public Set<Expense> getAllExpenses(UUID userId) {
+        User user = userRepo.get(userId);
+        return user.getExpenses();
     }
 }

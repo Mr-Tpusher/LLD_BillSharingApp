@@ -1,8 +1,10 @@
 package controller;
+import entity.Expense;
 import entity.User;
 import exception.IncorrectExistingPassword;
 import service.UserService;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class UserController {
@@ -32,6 +34,14 @@ public class UserController {
 
     public boolean updatePassword(UUID userId, String oldPassword, String newPassword) throws IncorrectExistingPassword {
         return userService.updatePassword(userId, oldPassword, newPassword);
+    }
+
+    public Double totalOwedAmount(UUID userId) {
+        return 0.0;
+    }
+
+    public Set<Expense> getAllExpense(UUID userId) {
+        return userService.getAllExpenses(userId);
     }
 
 }
