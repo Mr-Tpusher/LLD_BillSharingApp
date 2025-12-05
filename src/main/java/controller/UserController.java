@@ -36,8 +36,8 @@ public class UserController {
         return userService.updatePassword(userId, oldPassword, newPassword);
     }
 
-    public Double totalOwedAmount(UUID userId) {
-        return 0.0;
+    public Double currentBalanceAmount(UUID userId) {
+        return userService.currentBalanceAmount(userId);
     }
 
     public Set<Expense> getAllExpense(UUID userId) {

@@ -47,4 +47,22 @@ public class UserService {
         User user = userRepo.get(userId);
         return user.getExpenses();
     }
+
+    public Double currentBalanceAmount(UUID userId) {
+        User user = userRepo.get(userId);
+        Set<Expense> allExpenses = user.getExpenses();
+
+        double balance = 0;
+        for (Expense expense : allExpenses) {
+            // if the user has paid amount in this expense, then it is should be subtracted from the current balance
+            // negative balance indicates - money to be received.
+            balance -= expense.getPaidAmounts().getOrDefault(user, 0.0);
+
+            // contribution has to be paid by all the users,
+            // positive since it is outgoing
+            balance += expense.getSplitAmounts().getOrDefault(user, 0.0);
+        }
+
+        return balance;
+    }
 }

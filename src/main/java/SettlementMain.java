@@ -71,6 +71,15 @@ public class SettlementMain {
 
         System.out.println("--------------------------------------");
 
+        System.out.println("Getting balance for each user:");
+        System.out.println("ada = " + userController.currentBalanceAmount(ada.getId()));
+        System.out.println("alan = " + userController.currentBalanceAmount(alan.getId()));
+        System.out.println("charles = " + userController.currentBalanceAmount(charles.getId()));
+        System.out.println("claude = " + userController.currentBalanceAmount(claude.getId()));
+        System.out.println("grace = " + userController.currentBalanceAmount(grace.getId()));
+
+        System.out.println("-------------------------------");
+        System.out.println("SettleUp for the group = " + oGs.getName());
         System.out.println(groupController.settleUp(oGs.getId()));
 
     }
