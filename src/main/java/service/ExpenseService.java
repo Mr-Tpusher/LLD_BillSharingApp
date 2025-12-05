@@ -31,7 +31,7 @@ public class ExpenseService {
             group.getParticipants().forEach(createExpenseRequest::addParticipant);
         }
 
-        IPayerStrategy payerStrategy = PayerStrategyFactory.get(createExpenseRequest.getPaymentStrategyType());
+        IPayerStrategy payerStrategy = PayerStrategyFactory.get(createExpenseRequest.getPayerStrategy());
         ISplitStrategy splitStrategy = SplitStrategyFactory.get(createExpenseRequest.getSplitStrategyType());
 
         Map<User, Double> paidAmounts = payerStrategy.calculatePayerContributions(createExpenseRequest);

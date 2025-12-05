@@ -1,4 +1,4 @@
-import constants.PaymentStrategyType;
+import constants.PayerStrategy;
 import constants.SplitStrategyType;
 import controller.ExpenseController;
 import controller.GroupController;
@@ -71,7 +71,7 @@ public class Main {
                 .participant(charles)
                 .participant(grace)
                 .participant(ada)
-                .paymentStrategyType(PaymentStrategyType.SELF)
+                .paymentStrategyType(PayerStrategy.SELF)
                 .splitStrategyType(SplitStrategyType.EQUAL)
                 .build();
 
@@ -87,7 +87,7 @@ public class Main {
                 .desc("Dinner")
                 .groupId(oGs.getId())
                 .totalAmount(5000)
-                .paymentStrategyType(PaymentStrategyType.SELF)
+                .paymentStrategyType(PayerStrategy.SELF)
                 .splitStrategyType(SplitStrategyType.EQUAL)
                 .build();
 
@@ -110,7 +110,7 @@ public class Main {
                 .desc("MeetUp")
                 .groupId(oGs.getId())
                 .totalAmount(10000)
-                .paymentStrategyType(PaymentStrategyType.SELF)
+                .paymentStrategyType(PayerStrategy.SELF)
                 .splitStrategyType(SplitStrategyType.EQUAL)
                 .build();
 
@@ -123,7 +123,7 @@ public class Main {
                 .desc("Partyyyyyyyy!!!")
                 .groupId(oGs.getId())
                 .totalAmount(4000)
-                .paymentStrategyType(PaymentStrategyType.SELF)
+                .paymentStrategyType(PayerStrategy.SELF)
                 .splitStrategyType(SplitStrategyType.EQUAL)
                 .build();
 

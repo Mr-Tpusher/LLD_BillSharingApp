@@ -1,6 +1,6 @@
 package constants;
 
-public enum PaymentStrategyType {
+public enum PayerStrategy {
     SELF,
     MULTI
 }

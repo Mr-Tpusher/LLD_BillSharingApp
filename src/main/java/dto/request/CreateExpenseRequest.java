@@ -1,6 +1,6 @@
 package dto.request;
 
-import constants.PaymentStrategyType;
+import constants.PayerStrategy;
 import constants.SplitStrategyType;
 import entity.User;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class CreateExpenseRequest {
     private double totalAmount;
     private Set<User> participants;
     private UUID groupId;
-    private PaymentStrategyType paymentStrategyType;
+    private PayerStrategy payerStrategy;
     private SplitStrategyType splitStrategyType;
 
     private CreateExpenseRequest(Builder builder) {
@@ -29,7 +29,7 @@ public class CreateExpenseRequest {
         this.participants = ConcurrentHashMap.newKeySet();
         this.groupId = builder.groupId;
         this.participants.addAll(builder.participants);
-        this.paymentStrategyType = builder.paymentStrategyType;
+        this.payerStrategy = builder.payerStrategy;
         this.splitStrategyType = builder.splitStrategyType;
     }
 
@@ -45,7 +45,7 @@ public class CreateExpenseRequest {
         private double totalAmount;
         private Set<User> participants;
         private UUID groupId;
-        private PaymentStrategyType paymentStrategyType;
+        private PayerStrategy payerStrategy;
         private SplitStrategyType splitStrategyType;
 
         public Builder() {
@@ -79,8 +79,8 @@ public class CreateExpenseRequest {
             return this;
         }
 
-        public Builder paymentStrategyType(PaymentStrategyType paymentStrategyType) {
-            this.paymentStrategyType = paymentStrategyType;
+        public Builder paymentStrategyType(PayerStrategy payerStrategy) {
+            this.payerStrategy = payerStrategy;
             return this;
         }
 
@@ -94,7 +94,7 @@ public class CreateExpenseRequest {
             if (this.desc == null || this.desc.isBlank()) throw new IllegalArgumentException("description cannot be null");
             if (this.totalAmount <= 0) throw new IllegalArgumentException("amount must be positive");
             if (this.splitStrategyType == null) throw new IllegalArgumentException("splitStrategyType cannot be null");
-            if (this.paymentStrategyType == null) throw new IllegalArgumentException("paymentStrategyType cannot be null");
+            if (this.payerStrategy == null) throw new IllegalArgumentException("payerStrategy cannot be null");
             
             return new CreateExpenseRequest(this);
         }
