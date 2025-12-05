@@ -1,5 +1,6 @@
 package controller;
 
+import dto.response.Transaction;
 import entity.Expense;
 import entity.Group;
 import entity.User;
@@ -24,4 +25,7 @@ public class GroupController {
         return groupService.getAllGroupExpense(userId, groupId);
     }
 
+    public List<Transaction> settleUp(UUID groupId) {
+        return groupService.settleUp(groupId);
+    }
 }

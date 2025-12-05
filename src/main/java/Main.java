@@ -4,6 +4,7 @@ import controller.ExpenseController;
 import controller.GroupController;
 import controller.UserController;
 import dto.request.CreateExpenseRequest;
+import dto.response.Transaction;
 import entity.Expense;
 import entity.Group;
 import entity.User;
@@ -54,7 +55,7 @@ public class Main {
         User claude = new User("Claude", "3333", "Shannon");
 
         Group oGs = groupController.createGroup(charles, "OGs",
-                List.of(grace, alan, grace, ada, claude));
+                List.of(grace, alan, charles, ada, claude));
         System.out.println(oGs);
 
         System.out.println("------------------------------------------");
@@ -101,7 +102,43 @@ public class Main {
         Set<Expense> expenses = groupController.getAllGroupExpense(alan.getId(), oGs.getId());
         System.out.println(expenses);
 
+        System.out.println("-----------------------------------------------");
 
+
+        CreateExpenseRequest createExpenseRequest2 = new CreateExpenseRequest.Builder()
+                .creator(ada)
+                .desc("MeetUp")
+                .groupId(oGs.getId())
+                .totalAmount(10000)
+                .paymentStrategyType(PaymentStrategyType.SELF)
+                .splitStrategyType(SplitStrategyType.EQUAL)
+                .build();
+
+        Expense expense2 = expenseController.createExpense(createExpenseRequest2);
+        System.out.println(expense2);
+
+
+        CreateExpenseRequest expenseRequest3 = new CreateExpenseRequest.Builder()
+                .creator(charles)
+                .desc("Partyyyyyyyy!!!")
+                .groupId(oGs.getId())
+                .totalAmount(4000)
+                .paymentStrategyType(PaymentStrategyType.SELF)
+                .splitStrategyType(SplitStrategyType.EQUAL)
+                .build();
+
+        expenseController.createExpense(expenseRequest3);
+
+
+        System.out.println("all group expense -> ");
+        System.out.println(groupController.getAllGroupExpense(ada.getId(), oGs.getId()));
+
+        System.out.println("-----------------------------------------------");
+
+        List<Transaction> settlement = groupController.settleUp(oGs.getId());
+        System.out.println(settlement);
+
+        System.out.println("-----------------------------------------------");
     }
 
 }
