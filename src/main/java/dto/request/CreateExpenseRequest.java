@@ -6,6 +6,8 @@ import entity.User;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +23,9 @@ public class CreateExpenseRequest {
     private UUID groupId;
     private PayerStrategy payerStrategy;
     private SplitStrategyType splitStrategyType;
+    private Map<User, Double> payersMap;
+    private Map<User, Double> splitExactAmountMap;
+    private Map<User, Double> spiltPercentageMap;
 
     private CreateExpenseRequest(Builder builder) {
         this.desc = builder.desc;
@@ -31,6 +36,9 @@ public class CreateExpenseRequest {
         this.participants.addAll(builder.participants);
         this.payerStrategy = builder.payerStrategy;
         this.splitStrategyType = builder.splitStrategyType;
+        this.payersMap = builder.payersMap;
+        this.spiltPercentageMap = builder.spiltPercentageMap;
+        this.splitExactAmountMap = builder.splitExactAmountMap;
     }
 
     public void addParticipant(User user) {
@@ -47,6 +55,9 @@ public class CreateExpenseRequest {
         private UUID groupId;
         private PayerStrategy payerStrategy;
         private SplitStrategyType splitStrategyType;
+        private Map<User, Double> payersMap;
+        private Map<User, Double> splitExactAmountMap;
+        private Map<User, Double> spiltPercentageMap;
 
         public Builder() {
             participants = ConcurrentHashMap.newKeySet();
@@ -89,13 +100,37 @@ public class CreateExpenseRequest {
             return this;
         }
 
+        public Builder splitExactAmountMap(Map<User, Double> splitExactAmountMap) {
+            this.splitExactAmountMap = new HashMap<>(splitExactAmountMap);
+            return this;
+        }
+
+        public Builder splitPercentageMap(Map<User, Double> spiltPercentageMap) {
+            this.spiltPercentageMap = new HashMap<>(spiltPercentageMap);
+            return this;
+        }
+
+        public Builder payersMap(Map<User, Double> payersMap) {
+            this.payersMap = new HashMap<>(payersMap);
+            return this;
+        }
+
         public CreateExpenseRequest build() {
             if (this.creator == null) throw new IllegalArgumentException("creator cannot be null");
             if (this.desc == null || this.desc.isBlank()) throw new IllegalArgumentException("description cannot be null");
             if (this.totalAmount <= 0) throw new IllegalArgumentException("amount must be positive");
             if (this.splitStrategyType == null) throw new IllegalArgumentException("splitStrategyType cannot be null");
             if (this.payerStrategy == null) throw new IllegalArgumentException("payerStrategy cannot be null");
-            
+
+            if (this.payerStrategy == PayerStrategy.MULTI && this.payersMap == null)
+                throw new IllegalArgumentException(PayerStrategy.MULTI + " requires payersMap");
+
+            if (this.splitStrategyType == SplitStrategyType.EXACT_AMOUNT && splitExactAmountMap == null)
+                throw new IllegalArgumentException(SplitStrategyType.EXACT_AMOUNT + " requires splitExactAmountMap");
+
+            if (this.splitStrategyType == SplitStrategyType.PERCENTAGE && this.spiltPercentageMap == null)
+                throw new IllegalArgumentException(SplitStrategyType.EXACT_AMOUNT + " requires splitPercentageMap");
+
             return new CreateExpenseRequest(this);
         }
 
